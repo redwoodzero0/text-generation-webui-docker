@@ -15,9 +15,8 @@ services:
     ports:
       - 7860:7860  # Default web port
       - 5000:5000  # Default API port
-      - 5005:5005  # Default streaming port
-      - 5001:5001  # Default OpenAI API extension port
-      - 6000:6000  # OAI API
+      - 5001:5001  # Default streaming port
+      - 6000:6000  # Default OpenAI API extension port
     volumes:
       - ./config/characters:/app/characters
       - ./config/loras:/app/loras
