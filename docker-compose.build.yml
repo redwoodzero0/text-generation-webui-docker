@@ -5,18 +5,19 @@ services:
       context: .
       target: default  # Specify the variant to build
       args:
-        - VERSION_TAG="v1.5"  # Checkout this specific tag from upstream. Omit or set `nightly` for latest.
+        - VERSION_TAG="v1.6"  # Checkout this specific tag from upstream. Omit or set `nightly` for latest.
 #        - BUILD_DATE="1970-01-01"  # Set the build date as desired
 #        - LCL_SRC_DIR=text-generation-webui  # Developers - see Dockerfile app_base
     container_name: text-generation-webui
     environment:
-      - EXTRA_LAUNCH_ARGS="--listen --verbose" # Custom launch args (e.g., --model MODEL_NAME)
+      - EXTRA_LAUNCH_ARGS="--loader exllamav2 --alpha 2.7 --max_seq_len 8192 --api --listen" # Custom launch args (e.g., --model MODEL_NAME)
 #      - BUILD_EXTENSIONS_LIVE="silero_tts whisper_stt" # Install named extensions during every container launch. THIS WILL SIGNIFICANLTLY SLOW LAUNCH TIME.
     ports:
       - 7860:7860  # Default web port
-#      - 5000:5000  # Default API port
-#      - 5005:5005  # Default streaming port
-#      - 5001:5001  # Default OpenAI API extension port
+      - 5000:5000  # Default API port
+      - 5005:5005  # Default streaming port
+      - 5001:5001  # Default OpenAI API extension port
+      - 6000:6000  # OAI API
     volumes:
       - ./config/characters:/app/characters
       - ./config/loras:/app/loras
