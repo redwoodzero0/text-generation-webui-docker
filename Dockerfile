@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.1.0-devel-ubuntu22.04 AS env_base
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04 AS env_base
 # Pre-reqs
 RUN apt-get update && apt-get install --no-install-recommends -y \
     git vim build-essential python3-dev python3-venv python3-pip
@@ -43,7 +43,7 @@ RUN cd /app/repositories/GPTQ-for-LLaMa/ && python3 setup_cuda.py install
 # Install flash attention for exllamav2
 RUN pip install flash-attn --no-build-isolation
 
-FROM nvidia/cuda:12.1.0-devel-ubuntu22.04 AS base
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04 AS base
 # Runtime pre-reqs
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-venv python3-dev git
@@ -59,7 +59,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 WORKDIR /app
 EXPOSE 7860
 EXPOSE 5000
-EXPOSE 5005
+EXPOSE 5001
+EXPOSE 6000
 # Required for Python print statements to appear in logs
 ENV PYTHONUNBUFFERED=1
 # Force variant layers to sync cache by setting --build-arg BUILD_DATE
